@@ -237,7 +237,9 @@ view: lk_m_retention {
       week,
       month,
       quarter,
-      year
+      year,
+      fiscal_quarter,
+      fiscal_year
     ]
     sql: to_timestamp(${TABLE}.policy_start_date) ;;
   }
@@ -271,6 +273,8 @@ view: lk_m_retention {
     type: string
     sql: ${TABLE}.uw_policy_no_ly ;;
   }
+
+
 
 
 # Measures
@@ -843,56 +847,57 @@ view: lk_m_retention {
   measure: aauicl_yoy_gross_premium_change_hol {
     label: "AAUICL YoY Gross Premium Change HOL"
     type: number
-    sql: (${aauicl_ty_gross_premium_hol}-${aauicl_ly_gross_premium_hol}/nullif(${aauicl_ly_gross_premium_hol},0) ;;
+    sql: (${aauicl_ty_gross_premium_hol}-${aauicl_ly_gross_premium_hol})/nullif(${aauicl_ly_gross_premium_hol},0) ;;
     value_format_name: percent_1
   }
+
 
   measure: aauicl_yoy_gross_premium_change_ren {
     label: "AAUICL YoY Gross Premium Change REN"
     type: number
-    sql: (${aauicl_ty_gross_premium_ren}-${aauicl_ly_gross_premium_ren}/nullif(${aauicl_ly_gross_premium_ren},0) ;;
+    sql: (${aauicl_ty_gross_premium_ren}-${aauicl_ly_gross_premium_ren})/nullif(${aauicl_ly_gross_premium_ren},0) ;;
     value_format_name: percent_1
   }
 
   measure: aauicl_yoy_net_premium_change_hol {
     label: "AAUICL YoY Net Premium Change HOL"
     type: number
-    sql: (${aauicl_ty_net_premium_hol}-${aauicl_ly_net_premium_hol}/nullif(${aauicl_ly_net_premium_hol},0) ;;
+    sql: (${aauicl_ty_net_premium_hol}-${aauicl_ly_net_premium_hol})/nullif(${aauicl_ly_net_premium_hol},0) ;;
     value_format_name: percent_1
   }
 
   measure: aauicl_yoy_net_premium_change_ren {
     label: "AAUICL YoY Net Premium Change REN"
     type: number
-    sql: (${aauicl_ty_net_premium_ren}-${aauicl_ly_net_premium_ren}/nullif(${aauicl_ly_net_premium_ren},0) ;;
+    sql: (${aauicl_ty_net_premium_ren}-${aauicl_ly_net_premium_ren})/nullif(${aauicl_ly_net_premium_ren},0) ;;
     value_format_name: percent_1
   }
 
   measure: aauicl_yoy_net_premium_change_hol_per_ly_gross {
     label: "AAUICL YoY Net Premium Change HOL (% of LY Gross)"
     type: number
-    sql: (${aauicl_ty_net_premium_hol}-${aauicl_ly_net_premium_hol}/nullif(${aauicl_ly_gross_premium_hol},0) ;;
+    sql: (${aauicl_ty_net_premium_hol}-${aauicl_ly_net_premium_hol})/nullif(${aauicl_ly_gross_premium_hol},0) ;;
     value_format_name: percent_1
   }
 
   measure: aauicl_yoy_net_premium_change_ren_per_ly_gross {
     label: "AAUICL YoY Net Premium Change REN (% of LY Gross)"
     type: number
-    sql: (${aauicl_ty_net_premium_ren}-${aauicl_ly_net_premium_ren}/nullif(${aauicl_ly_gross_premium_ren},0) ;;
+    sql: (${aauicl_ty_net_premium_ren}-${aauicl_ly_net_premium_ren})/nullif(${aauicl_ly_gross_premium_ren},0) ;;
     value_format_name: percent_1
   }
 
   measure: aauicl_yoy_commission_change_hol_per_ly_gross {
     label: "AAUICL YoY Commission Change HOL (% of LY Gross)"
     type: number
-    sql: (${aauicl_ty_commission_hol}-${aauicl_ly_commission_hol}/nullif(${aauicl_ly_gross_premium_hol},0) ;;
+    sql: (${aauicl_ty_commission_hol}-${aauicl_ly_commission_hol})/nullif(${aauicl_ly_gross_premium_hol},0) ;;
     value_format_name: percent_1
   }
 
   measure: aauicl_yoy_commission_change_ren_per_ly_gross {
     label: "AAUICL YoY Commission Change REN (% of LY Gross)"
     type: number
-    sql: (${aauicl_ty_commission_ren}-${aauicl_ly_commission_ren}/nullif(${aauicl_ly_gross_premium_ren},0) ;;
+    sql: (${aauicl_ty_commission_ren}-${aauicl_ly_commission_ren})/nullif(${aauicl_ly_gross_premium_ren},0) ;;
     value_format_name: percent_1
   }
 
@@ -1173,7 +1178,7 @@ view: lk_m_retention {
   }
 
   measure: aauicl_yoy_commission_change_ren_gbp {
-    label: "AAUICL YoY Comission Change REN (£)"
+    label: "AAUICL YoY Commission Change REN (£)"
     type: number
     sql: ${aauicl_average_commission_ty_ren}-${aauicl_average_commission_ly_ren} ;;
     value_format_name: gbp_0
