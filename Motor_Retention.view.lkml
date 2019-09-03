@@ -755,6 +755,54 @@ view: lk_m_retention {
     value_format_name: gbp_0
   }
 
+  measure: aauicl_ty_gross_premium_xq {
+    label: "AAUICL TY Gross Premium Cross Quote"
+    type: sum
+    sql: ${TABLE}.net_written_premium + ${TABLE}.broker_commission ;;
+    filters: {
+      field: aauicl_hold
+      value: "0"
+    }
+    filters: {
+      field: aauicl_ind
+      value: "1"
+    }
+    value_format_name: gbp_0
+  }
+
+  measure: aauicl_ty_net_premium_xq {
+    label: "AAUICL TY Net Premium Cross Quote"
+    type: sum
+    sql: ${TABLE}.net_written_premium ;;
+    filters: {
+      field: aauicl_hold
+      value: "0"
+    }
+    filters: {
+      field: aauicl_ind
+      value: "1"
+    }
+    value_format_name: gbp_0
+  }
+
+  measure: aauicl_ty_commission_xq {
+    label: "AAUICL TY Commission Cross Quote"
+    type: sum
+    sql: ${TABLE}.broker_commission ;;
+    filters: {
+      field: aauicl_hold
+      value: "0"
+    }
+    filters: {
+      field: aauicl_ind
+      value: "1"
+    }
+    value_format_name: gbp_0
+  }
+
+
+
+
   measure: aauicl_ty_gross_premium_share_of_ly_gross_premium {
     label: "AAUICL TY Gross Premium Share of LY Gross Premium"
     type: number
