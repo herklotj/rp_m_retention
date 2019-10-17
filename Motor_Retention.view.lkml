@@ -164,6 +164,14 @@ view: lk_m_retention {
     sql: ${TABLE}.ly_aa_membership ;;
   }
 
+  dimension: ly_aa_tenure_v3 {
+    label: "LY AA Tenure (3)"
+    type: tier
+    tiers: [0,1,2]
+    style: integer
+    sql: ${TABLE}.ly_aa_tenure ;;
+  }
+
   dimension: ly_aa_tenure {
     label: "LY AA Tenure (5)"
     type: tier
