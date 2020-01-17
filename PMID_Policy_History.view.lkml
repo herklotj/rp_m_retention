@@ -67,4 +67,16 @@ view: pmid_policy_history {
     value_format_name: percent_0
   }
 
+  measure: commission_102 {
+    type: number
+    sql: sum(broker_commission_102)/sum(net_written_premium_102) ;;
+    value_format_name: percent_1
+  }
+
+  measure: commission_103 {
+    type: number
+    sql: sum(broker_commission_103)/nullif(sum(net_written_premium_103),0) ;;
+    value_format_name: percent_1
+  }
+
  }

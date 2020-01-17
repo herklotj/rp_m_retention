@@ -936,12 +936,27 @@ view: lk_m_retention {
     value_format_name: percent_1
   }
 
+  measure: aauicl_yoy_net_premium_change_hol_per_ly_net {
+    label: "AAUICL YoY Net Premium Change HOL (% of LY Net)"
+    type: number
+    sql: (${aauicl_ty_net_premium_hol}-${aauicl_ly_net_premium_hol})/nullif(${aauicl_ly_net_premium_hol},0) ;;
+    value_format_name: percent_1
+  }
+
   measure: aauicl_yoy_net_premium_change_ren_per_ly_gross {
     label: "AAUICL YoY Net Premium Change REN (% of LY Gross)"
     type: number
     sql: (${aauicl_ty_net_premium_ren}-${aauicl_ly_net_premium_ren})/nullif(${aauicl_ly_gross_premium_ren},0) ;;
     value_format_name: percent_1
   }
+
+  measure: aauicl_yoy_net_premium_change_ren_per_ly_net {
+    label: "AAUICL YoY Net Premium Change REN (% of LY Net)"
+    type: number
+    sql: (${aauicl_ty_net_premium_ren}-${aauicl_ly_net_premium_ren})/nullif(${aauicl_ly_net_premium_ren},0) ;;
+    value_format_name: percent_1
+  }
+
 
   measure: aauicl_yoy_commission_change_hol_per_ly_gross {
     label: "AAUICL YoY Commission Change HOL (% of LY Gross)"
