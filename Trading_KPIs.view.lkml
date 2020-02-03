@@ -16,10 +16,10 @@ select
         when months_between(pmid.policy_start_mth,(to_date(sysdate) - day(to_date(sysdate)) +1)) = -1 then 'Last Month'
         when months_between(pmid.policy_start_mth,(to_date(sysdate) - day(to_date(sysdate)) +1)) > 1 then 'Future Months'
         else 'Other' end as current_month
-  ,case when pmid.policy_start_mth >= '2019-02-01' then 'FY20'
-        when pmid.policy_start_mth >= '2020-02-01' then 'FY21'
-        when pmid.policy_start_mth >= '2021-02-01' then 'FY22'
-        when pmid.policy_start_mth >= '2022-02-01' then 'FY23'
+  ,case when pmid.policy_start_mth >= '2019-02-01' and pmid.policy_start_mth < '2020-02-01' then 'FY20'
+        when pmid.policy_start_mth >= '2020-02-01' and pmid.policy_start_mth < '2021-02-01' then 'FY21'
+        when pmid.policy_start_mth >= '2021-02-01' and pmid.policy_start_mth < '2022-02-01' then 'FY22'
+        when pmid.policy_start_mth >= '2022-02-01' and pmid.policy_start_mth < '2023-02-01' then 'FY23'
         else 'Unknown' end as Financial_Year
 from
   (
