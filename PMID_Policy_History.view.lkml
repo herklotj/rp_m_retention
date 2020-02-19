@@ -37,6 +37,11 @@ view: pmid_policy_history {
     sql: broker_nb_rb ;;
   }
 
+  dimension: channel {
+    type: string
+    sql: channel ;;
+  }
+
   measure: sales_102 {
     sql: sum(case when aauicl_scheme='102' then aauicl_ind else 0.00 end) ;;
   }
