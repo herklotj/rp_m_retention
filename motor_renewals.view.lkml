@@ -1,18 +1,19 @@
 view: motor_renewals {
   derived_table: {
     sql:
-SELECT * FROM
-(SELECT concat('TIA', tia_reference_ly) as tia_reference_number, policy_start_date, * FROM lk_m_retention WHERE aauicl_hold = 1) a
+SELECT * FROM lk_m_retention a
+LEFT JOIN
 
+(SELECT customer_quote_reference, max_quote_dttm AS quote_dttm, quote_id, marginpricetest_indicator_desc, cover_start_dt FROM
+
+(SELECT customer_quote_reference, MAX(quote_dttm) AS max_quote_dttm, MAX(tid) AS max_tid FROM qs_cover WHERE business_purpose = 'Renewal' GROUP BY customer_quote_reference) a
 JOIN
+(SELECT quote_id, marginpricetest_indicator_desc, cover_start_dt, tid AS tid FROM qs_cover WHERE business_purpose = 'Renewal') b
+ON a.max_tid = b.tid AND customer_quote_reference = customer_quote_reference) b
 
-(SELECT * FROM
-(SELECT customer_quote_reference, max(quote_dttm) as max_quote_dttm, max(tid) as max_tid FROM qs_cover GROUP BY customer_quote_reference) a
-JOIN
-(SELECT quote_id, marginpricetest_indicator_desc, cover_start_dt, tid as tid FROM qs_cover) b
-ON a.max_tid = b.tid ) b
+ON concat ('TIA',a.tia_reference_ly) = b.customer_quote_reference AND a.policy_start_date = b.cover_start_dt
+WHERE a.aauicl_hold = 1
 
-ON a.tia_reference_number = b.customer_quote_reference AND a.policy_start_date = b.cover_start_dt
 
 
         ;;
