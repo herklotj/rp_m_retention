@@ -15,3 +15,5 @@ explore: lk_m_retention {}
 explore: pmid_policy_history {}
 explore: trading_kpis {}
 explore: motor_renewals {}
+explore: motor_sboc {}
+explore: mtas {}
