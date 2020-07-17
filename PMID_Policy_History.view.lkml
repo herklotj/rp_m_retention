@@ -5,7 +5,7 @@ view: pmid_policy_history {
           from
          lk_m_policy_history
         where annual_cover_start_dttm = schedule_cover_start_dttm and status = 'P' and cfi_ind=0
-              and to_date(sysdate) > to_date(annual_cover_start_dttm)
+               and to_date(sysdate) > to_date(annual_cover_start_dttm)
      ;;
   }
 
@@ -57,19 +57,19 @@ view: pmid_policy_history {
   measure: Panel_Share_102  {
     type: number
     sql: ${sales_102}/${broker_sales} ;;
-    value_format_name: percent_0
+    value_format_name: percent_1
   }
 
   measure: Panel_Share_103  {
     type: number
     sql: ${sales_103}/${broker_sales} ;;
-    value_format_name: percent_0
+    value_format_name: percent_1
   }
 
   measure: Panel_Share_Total  {
     type: number
     sql: (${sales_103}+${sales_102})/${broker_sales} ;;
-    value_format_name: percent_0
+    value_format_name: percent_1
   }
 
   measure: commission_102 {

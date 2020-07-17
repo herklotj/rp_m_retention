@@ -14,3 +14,4 @@ persist_with: renewals_project_default_datagroup
 explore: lk_m_retention {}
 explore: pmid_policy_history {}
 explore: trading_kpis {}
+explore: motor_renewals {}
