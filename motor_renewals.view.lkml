@@ -105,19 +105,19 @@ WHERE l.aauicl_hold = 1
 
   measure: rentention_rate {
     type: number
-    sql:  ${total_renewed_aauicl} / ${total_aauicl_hold};;
+    sql:  ${total_renewed_aauicl} / greatest(${total_aauicl_hold},1);;
     value_format_name: percent_2
   }
 
   measure: decline_rate {
     type: number
-    sql:  ${total_declined_quote} / ${total_aauicl_hold};;
+    sql:  ${total_declined_quote} / greatest(${total_aauicl_hold},1);;
     value_format_name: percent_2
   }
 
   measure: lost_to_panel_member{
     type: number
-    sql:  ${total_renewed_broker_non_aauicl} / ${total_non_aauicl_renew};;
+    sql:  ${total_renewed_broker_non_aauicl} / greatest(${total_non_aauicl_renew},1);;
     value_format_name: percent_2
   }
 
