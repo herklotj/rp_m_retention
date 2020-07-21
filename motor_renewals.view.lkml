@@ -3,7 +3,8 @@ view: motor_renewals {
     sql:
 SELECT l.*,
        COALESCE(ps.insurerquoteref,q.quote_id) AS quote_id,
-       c.marginpricetest_indicator_desc
+       c.marginpricetest_indicator_desc,
+       c.quote_dttm
 FROM lk_m_retention l
   LEFT JOIN ice_aa_policy_summary ps
          ON l.uw_policy_no = ps.policy_reference_number
@@ -38,6 +39,18 @@ FROM lk_m_retention l
   LEFT JOIN qs_cover c ON COALESCE (ps.insurerquoteref,q.quote_id) = c.quote_id
 WHERE l.aauicl_hold = 1
         ;;
+  }
+
+  dimension_group: policy_start {
+    type: time
+    timeframes: [
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: to_timestamp(${TABLE}.policy_start_date) ;;
   }
 
   dimension_group:quote_dttm  {
