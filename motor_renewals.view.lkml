@@ -79,27 +79,27 @@ WHERE l.aauicl_hold = 1
 
   measure: total_aauicl_hold {
     type: number
-    sql: sum(case when aauicl_hold = 1 then 1 else 0.0 end);;
+    sql: sum(case when aauicl_hold = 1 then 1 else 0.0000 end);;
   }
 
   measure: total_renewed_aauicl {
     type: number
-    sql:  sum(case when broker_ind = 1 and aauicl_ind = 1 then 1 else 0.0 end);;
+    sql:  sum(case when broker_ind = 1 and aauicl_ind = 1 then 1 else 0.0000 end);;
   }
 
   measure: total_declined_quote {
     type: number
-    sql:  sum(case when inv_premium_hol = 0 then 1 else 0.0 end);;
+    sql:  sum(case when inv_premium_hol = 0 then 1 else 0.0000 end);;
   }
 
   measure: total_renewed_broker_non_aauicl {
     type: number
-    sql:  sum(case when aauicl_ind = 0 and broker_ind = 1 then 1 else 0.0 end);;
+    sql:  sum(case when aauicl_ind = 0 and broker_ind = 1 then 1 else 0.0000 end);;
   }
 
   measure: total_non_aauicl_renew {
     type: number
-    sql:  sum(case when aauicl_ind = 0 then 1 else 0.0 end);;
+    sql:  sum(case when aauicl_ind = 0 then 1 else 0.0000 end);;
   }
 
 
