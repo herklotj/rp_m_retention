@@ -1,19 +1,42 @@
 view: motor_renewals {
   derived_table: {
     sql:
-SELECT *, (case when ly_aa_tenure > 3 then '3+' else ly_aa_tenure end) as ly_tenure_aa FROM lk_m_retention a
-LEFT JOIN
-(SELECT customer_quote_reference, max_quote_dttm AS quote_dttm, quote_id, marginpricetest_indicator_desc, cover_start_dt FROM
-(SELECT customer_quote_reference, MAX(quote_dttm) AS max_quote_dttm, MAX(tid) AS max_tid FROM qs_cover WHERE business_purpose = 'Renewal' GROUP BY customer_quote_reference) a
-JOIN
-(SELECT quote_id, marginpricetest_indicator_desc, cover_start_dt, tid AS tid FROM qs_cover WHERE business_purpose = 'Renewal') b
-ON a.max_tid = b.tid AND customer_quote_reference = customer_quote_reference) b
-ON concat ('TIA',a.tia_reference_ly) = b.customer_quote_reference AND a.policy_start_date = b.cover_start_dt
-WHERE a.aauicl_hold = 1
-
-
-
-
+SELECT l.*,
+       COALESCE(ps.insurerquoteref,q.quote_id) AS quote_id,
+       c.marginpricetest_indicator_desc
+FROM lk_m_retention l
+  LEFT JOIN ice_aa_policy_summary ps
+         ON l.uw_policy_no = ps.policy_reference_number
+        AND ps.policy_transaction_type = 'RENEWAL_ACCEPT'
+        AND l.policy_start_date = to_date (ps.term_inception_date)
+  LEFT JOIN (SELECT a.customer_quote_reference,
+                    max_quote_dttm AS quote_dttm,
+                    b.quote_id,
+                    a.cover_start_dt
+             FROM (SELECT customer_quote_reference,
+                          cover_start_dt,
+                          MAX(quote_dttm) AS max_quote_dttm,
+                          MAX(tid) AS max_tid
+                   FROM qs_cover
+                   WHERE business_purpose = 'Renewal'
+                   AND   customer_quote_reference IN (SELECT DISTINCT concat('TIA',tia_reference_ly)
+                                                      FROM lk_m_retention)
+                   GROUP BY customer_quote_reference,
+                            cover_start_dt) a
+               JOIN (SELECT quote_id,
+                            cover_start_dt,
+                            tid AS tid
+                     FROM qs_cover
+                     WHERE business_purpose = 'Renewal'
+                     AND   customer_quote_reference IN (SELECT DISTINCT concat('TIA',tia_reference_ly)
+                                                        FROM lk_m_retention)) b
+                 ON a.max_tid = b.tid
+                AND customer_quote_reference = customer_quote_reference
+                AND a.cover_start_dt = b.cover_start_dt) q
+         ON concat ('TIA',l.tia_reference_ly) = q.customer_quote_reference
+        AND l.policy_start_date = q.cover_start_dt
+  LEFT JOIN qs_cover c ON COALESCE (ps.insurerquoteref,q.quote_id) = c.quote_id
+WHERE l.aauicl_hold = 1
         ;;
   }
 
@@ -33,34 +56,37 @@ WHERE a.aauicl_hold = 1
     sql:  ${TABLE}.marginpricetest_indicator_desc ;;
   }
 
-  dimension: ly_tenure_aa {
-    type: number
-    sql: ${TABLE}.ly_tenure_aa ;;
+  dimension: ly_aa_tenure {
+    label: "LY AA Tenure"
+    type: tier
+    tiers: [0,1,2,3]
+    style: integer
+    sql: ${TABLE}.ly_aa_tenure ;;
   }
 
   measure: total_aauicl_hold {
     type: number
-    sql: sum(case when aauicl_hold = 1 then 1 else 0.000000000000000000000000000 end);;
+    sql: sum(case when aauicl_hold = 1 then 1 else 0.0 end);;
   }
 
   measure: total_renewed_aauicl {
     type: number
-    sql:  sum(case when broker_ind = 1 and aauicl_ind = 1 then 1 else 0.000000000000000000000000000 end);;
+    sql:  sum(case when broker_ind = 1 and aauicl_ind = 1 then 1 else 0.0 end);;
   }
 
   measure: total_declined_quote {
     type: number
-    sql:  sum(case when inv_premium_hol = 0 then 1 else 0.000000000000000000000000000 end);;
+    sql:  sum(case when inv_premium_hol = 0 then 1 else 0.0 end);;
   }
 
   measure: total_renewed_broker_non_aauicl {
     type: number
-    sql:  sum(case when aauicl_ind = 0 and broker_ind = 1 then 1 else 0.000000000000000000000000000 end);;
+    sql:  sum(case when aauicl_ind = 0 and broker_ind = 1 then 1 else 0.0 end);;
   }
 
   measure: total_non_aauicl_renew {
     type: number
-    sql:  sum(case when aauicl_ind = 0 then 1 else 0.000000000000000000000000000 end);;
+    sql:  sum(case when aauicl_ind = 0 then 1 else 0.0 end);;
   }
 
 
