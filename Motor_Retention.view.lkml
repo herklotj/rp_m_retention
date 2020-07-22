@@ -439,6 +439,15 @@ view: lk_m_retention {
     }
   }
 
+  measure: broker_retained_aauicl {
+    label: "Broker Retained from AAUICL"
+    type: sum
+    sql: ${TABLE}.broker_ind ;;
+    filters: {
+      field: aauicl_hold
+      value: "1"
+    }
+  }
 
 
   measure: broker_retention_rate {
@@ -466,6 +475,13 @@ view: lk_m_retention {
     label: "Broker Retention Rate non-AAUICL"
     type:  number
     sql: 1.0*${broker_written_null}/nullif(${non_aauicl_holding},0) ;;
+    value_format_name: percent_2
+  }
+
+  measure: broker_retention_rate_aauicl {
+    label: "Broker Retention Rate AAUICL"
+    type:  number
+    sql: 1.0*${broker_retained_aauicl}/nullif(${aauicl_holding},0) ;;
     value_format_name: percent_2
   }
 
