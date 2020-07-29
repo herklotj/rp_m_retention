@@ -102,21 +102,6 @@ view: motor_renewals {
     sql:  sum(case when aauicl_ind = 0 then 1 else 0.0000 end);;
   }
 
-  dimension: aauicl_hold {
-    type: number
-    sql: ${TABLE}.aauicl_hold ;;
-  }
-
-  dimension: aauicl_ind {
-    type: number
-    sql: ${TABLE}.aauicl_ind ;;
-  }
-
-  dimension: inv_premium_hol {
-    type: number
-    sql: ${TABLE}.inv_premium_hol ;;
-  }
-
 
   measure: rentention_rate {
     type: number
@@ -136,6 +121,20 @@ view: motor_renewals {
     value_format_name: percent_2
   }
 
+  dimension: aauicl_hold {
+    type: number
+    sql: ${TABLE}.aauicl_hold ;;
+  }
+
+  dimension: aauicl_ind {
+    type: number
+    sql: ${TABLE}.aauicl_ind ;;
+  }
+
+  dimension: inv_premium_hol {
+    type: number
+    sql: ${TABLE}.inv_premium_hol ;;
+  }
 
 
 
@@ -143,7 +142,8 @@ view: motor_renewals {
 
 
 
-  ### Premium Measures ###
+
+
 
   measure: aauicl_ly_gross_premium {
     label: "AAUICL LY Gross Premium"
@@ -395,294 +395,6 @@ view: motor_renewals {
     value_format_name: gbp_0
   }
 
-  measure: aauicl_ty_gross_premium_xq {
-    label: "AAUICL TY Gross Premium Cross Quote"
-    type: sum
-    sql: ${TABLE}.net_written_premium + ${TABLE}.broker_commission ;;
-    filters: {
-      field: aauicl_hold
-      value: "0"
-    }
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_ty_net_premium_xq {
-    label: "AAUICL TY Net Premium Cross Quote"
-    type: sum
-    sql: ${TABLE}.net_written_premium ;;
-    filters: {
-      field: aauicl_hold
-      value: "0"
-    }
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_ty_commission_xq {
-    label: "AAUICL TY Commission Cross Quote"
-    type: sum
-    sql: ${TABLE}.broker_commission ;;
-    filters: {
-      field: aauicl_hold
-      value: "0"
-    }
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-
-  measure: aauicl_average_gross_premium_ly {
-    label: "AAUICL Average Gross Premium LY"
-    type:  average
-    sql: ${TABLE}.ly_premium+${TABLE}.ly_commission ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_gross_premium_ly_hol {
-    label: "AAUICL Average Gross Premium LY HOL"
-    type: average
-    sql: ${TABLE}.ly_premium+${TABLE}.ly_commission ;;
-    filters: {
-      field: inv_premium_hol
-      value: "NOT 0"
-    }
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_gross_premium_ly_ren {
-    label: "AAUICL Average Gross Premium LY REN"
-    type: average
-    sql: ${TABLE}.ly_premium+${TABLE}.ly_commission ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-
-
-  measure: aauicl_average_net_premium_ly {
-    label: "AAUICL Average Net Premium LY"
-    type:  average
-    sql: ${TABLE}.ly_premium ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_net_premium_ly_hol {
-    label: "AAUICL Average Net Premium LY HOL"
-    type: average
-    sql: ${TABLE}.ly_premium ;;
-    filters: {
-      field: inv_premium_hol
-      value: "NOT 0"
-    }
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_net_premium_ly_ren {
-    label: "AAUICL Average Net Premium LY REN"
-    type: average
-    sql: ${TABLE}.ly_premium ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_commission_ly {
-    label: "AAUICL Average Commission LY"
-    type:  average
-    sql: ${TABLE}.ly_commission ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_commission_ly_hol {
-    label: "AAUICL Average Commission LY HOL"
-    type: average
-    sql: ${TABLE}.ly_commission ;;
-    filters: {
-      field: inv_premium_hol
-      value: "NOT 0"
-    }
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_commission_ly_ren {
-    label: "AAUICL Average Commission LY REN"
-    type: average
-    sql: ${TABLE}.ly_commission ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-
-  measure: aauicl_average_gross_premium_ty {
-    label: "AAUICL Average Gross Premium TY"
-    type:  average
-    sql: ${TABLE}.net_written_premium+${TABLE}.broker_commission ;;
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_gross_premium_ty_hol {
-    label: "AAUICL Average Gross Premium TY HOL"
-    type: average
-    sql: ${TABLE}.inv_premium_hol+${TABLE}.inv_commission_hol ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_gross_premium_ty_ren {
-    label: "AAUICL Average Gross Premium TY REN"
-    type: average
-    sql: ${TABLE}.net_written_premium+${TABLE}.broker_commission ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-
-  measure: aauicl_average_net_premium_ty {
-    label: "AAUICL Average Net Premium TY"
-    type:  average
-    sql: ${TABLE}.net_written_premium ;;
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_net_premium_ty_hol {
-    label: "AAUICL Average Net Premium TY HOL"
-    type: average
-    sql: ${TABLE}.inv_premium_hol ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_net_premium_ty_ren {
-    label: "AAUICL Average Net Premium TY REN"
-    type: average
-    sql: ${TABLE}.net_written_premium ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-
-  measure: aauicl_average_commission_ty {
-    label: "AAUICL Average Commission TY"
-    type:  average
-    sql: ${TABLE}.broker_commission ;;
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_commission_ty_hol {
-    label: "AAUICL Average Commission TY HOL"
-    type: average
-    sql: ${TABLE}.inv_commission_hol ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_average_commission_ty_ren {
-    label: "AAUICL Average Commission TY REN"
-    type: average
-    sql: ${TABLE}.broker_commission ;;
-    filters: {
-      field: aauicl_hold
-      value: "1"
-    }
-    filters: {
-      field: aauicl_ind
-      value: "1"
-    }
-    value_format_name: gbp_0
-  }
-
-
-
-
 
 
 
@@ -761,49 +473,6 @@ view: motor_renewals {
     type: number
     sql: (${aauicl_ty_commission_ren}-${aauicl_ly_commission_ren})/nullif(${aauicl_ly_gross_premium_ren},0) ;;
     value_format_name: percent_1
-  }
-
-
-  measure: aauicl_yoy_gross_premium_change_hol_gbp {
-    label: "AAUICL YoY Gross Premium Change HOL (£)"
-    type: number
-    sql: ${aauicl_average_gross_premium_ty_hol}-${aauicl_average_gross_premium_ly_hol} ;;
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_yoy_gross_premium_change_ren_gbp {
-    label: "AAUICL YoY Gross Premium Change REN (£)"
-    type: number
-    sql: ${aauicl_average_gross_premium_ty_ren}-${aauicl_average_gross_premium_ly_ren} ;;
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_yoy_net_premium_change_hol_gbp {
-    label: "AAUICL YoY Net Premium Change HOL (£)"
-    type: number
-    sql: ${aauicl_average_net_premium_ty_hol}-${aauicl_average_net_premium_ly_hol} ;;
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_yoy_net_premium_change_ren_gbp {
-    label: "AAUICL YoY Net Premium Change REN (£)"
-    type: number
-    sql: ${aauicl_average_net_premium_ty_ren}-${aauicl_average_net_premium_ly_ren} ;;
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_yoy_commission_change_hol_gbp {
-    label: "AAUICL YoY Commission Change HOL (£)"
-    type: number
-    sql: ${aauicl_average_commission_ty_hol}-${aauicl_average_commission_ly_hol} ;;
-    value_format_name: gbp_0
-  }
-
-  measure: aauicl_yoy_commission_change_ren_gbp {
-    label: "AAUICL YoY Commission Change REN (£)"
-    type: number
-    sql: ${aauicl_average_commission_ty_ren}-${aauicl_average_commission_ly_ren} ;;
-    value_format_name: gbp_0
   }
 
 
