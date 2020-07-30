@@ -4,7 +4,9 @@ view: motor_renewals {
     SELECT l.*,
            COALESCE(ps.insurerquoteref,q.quote_id) AS quote_id,
            c.marginpricetest_indicator_desc,
-           c.quote_dttm
+           c.quote_dttm,
+           case when c.protect_no_claims_bonus ='true' then c.quotedpremium_ap_notinclipt else c.quotedpremium_an_notinclipt end as invited_prem_pre_sb
+
     FROM lk_m_retention l
       LEFT JOIN ice_aa_policy_summary ps
              ON l.uw_policy_no = ps.policy_reference_number
@@ -136,7 +138,11 @@ view: motor_renewals {
     sql: ${TABLE}.inv_premium_hol ;;
   }
 
+  dimension: sboc_flag {
+    type: number
+    sql: case when (invited_prem_pre_sb IS NOT NULL OR invited_prem_pre_sb!= '') AND inv_premium_hol!= 0 AND (invited_prem_pre_sb - inv_premium_hol) > 1 then 1 else 0.0000 end  ;;
 
+  }
 
 
 
