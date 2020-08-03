@@ -104,6 +104,16 @@ view: motor_renewals {
     sql:  sum(case when aauicl_ind = 0 then 1 else 0.0000 end);;
   }
 
+  measure: total_renewed_broker{
+    type: number
+    sql:  sum(case when aauicl_hold = 1 and broker_ind = 1 then 1 else 0.0000 end) ;;
+  }
+
+  measure: total_renewed_broker_aauicl{
+    type: number
+    sql:  sum(case when aauicl_hold = 1 and broker_ind = 1 and aauicl_ind = 1 then 1 else 0.0000 end) ;;
+  }
+
 
   measure: rentention_rate {
     type: number
@@ -122,6 +132,14 @@ view: motor_renewals {
     sql:  ${total_renewed_broker_non_aauicl} / greatest(${total_non_aauicl_renew},1);;
     value_format_name: percent_2
   }
+
+
+  measure: aauicl_win_rate{
+    type: number
+    sql:  ${total_renewed_broker_aauicl} / greatest(${total_renewed_broker},1);;
+    value_format_name: percent_2
+  }
+
 
   dimension: aauicl_hold {
     type: number
@@ -143,8 +161,6 @@ view: motor_renewals {
     sql: case when (invited_prem_pre_sb IS NOT NULL OR invited_prem_pre_sb!= '') AND inv_premium_hol!= 0 AND (invited_prem_pre_sb - inv_premium_hol) > 1 then 1 else 0.0000 end  ;;
 
   }
-
-
 
 
 
@@ -409,6 +425,7 @@ view: motor_renewals {
 
 
 
+
   measure: aauicl_yoy_gross_premium_change_hol {
     label: "AAUICL YoY Gross Premium Change HOL"
     type: number
@@ -480,6 +497,15 @@ view: motor_renewals {
     sql: (${aauicl_ty_commission_ren}-${aauicl_ly_commission_ren})/nullif(${aauicl_ly_gross_premium_ren},0) ;;
     value_format_name: percent_1
   }
+
+  measure: sboc_rate {
+    type: number
+    sql: sum (case when (invited_prem_pre_sb IS NOT NULL OR invited_prem_pre_sb!= '') AND inv_premium_hol!= 0 AND (invited_prem_pre_sb - inv_premium_hol) > 1 then 1 else 0.0000 end) /
+         sum (case when (invited_prem_pre_sb IS NOT NULL OR invited_prem_pre_sb!= '') AND inv_premium_hol!= 0  then 1 else 0.00000000000000000000000001 end);;
+    value_format_name: percent_1
+  }
+
+
 
 
 
