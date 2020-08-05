@@ -777,10 +777,25 @@ FROM (SELECT ps.policy_reference_number,
   }
 
 
+  measure: premium {
+    type: number
+    sql:  sum(case when aauicl_hold = 1 and aauicl_ind = 1 and (predicted_bc!= '' OR predicted_bc IS NOT NULL) then net_written_premium
+          when aauicl_hold = 1 and (predicted_bc!= '' OR predicted_bc IS NOT NULL) then inv_premium_hol else 0 end);;
+    value_format_name: gbp_0
+  }
+
+
   measure: predicted_burning_cost{
     type: number
-    sql: sum(case when predicted_bc IS NOT NULL OR predicted_bc!= '' then predicted_bc else 0.00000001 end) / sum(case when predicted_bc IS NOT NULL OR predicted_bc!= '' then 1.00000000 else 0.00000001 end);;
+    sql:  sum(predicted_bc) ;;
     value_format_name: gbp_0
+  }
+
+
+  measure: predicted_loss_ratio{
+    type: number
+    sql:  (${predicted_burning_cost})/(${premium}) ;;
+    value_format_name: percent_1
   }
 
 
