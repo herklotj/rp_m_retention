@@ -779,7 +779,7 @@ FROM (SELECT ps.policy_reference_number,
 
   measure: predicted_burning_cost{
     type: number
-    sql: sum(case when predicted_bc IS NOT NULL OR predicted_bc!= '' then predicted_bc else 0.00 end) / sum(case when predicted_bc IS NOT NULL OR predicted_bc!= '' then 1.00 else 0.00 end);;
+    sql: sum(case when predicted_bc IS NOT NULL OR predicted_bc!= '' then predicted_bc else 0.00000001 end) / sum(case when predicted_bc IS NOT NULL OR predicted_bc!= '' then 1.00000000 else 0.00000001 end);;
     value_format_name: gbp_0
   }
 
