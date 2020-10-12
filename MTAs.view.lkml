@@ -3,7 +3,7 @@ view: mtas {
     sql:
 
     select
-          to_date(old.quote_dttm) as quote_date
+          old.quote_dttm as quote_date
          ,old.quote_dttm as quote_dttm_old
          ,old.customer_quote_reference as customer_quote_reference_old
          ,old.rmita1_oldrisk1 as rmita1_oldrisk1_old
