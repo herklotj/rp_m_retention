@@ -282,7 +282,13 @@ view: lk_m_retention {
     sql: ${TABLE}.uw_policy_no_ly ;;
   }
 
-
+  dimension: aauicl_yoy_net_premium_change_ren_dist {
+    label: "AAUICL YoY Net Premium Change Distribution REN"
+    type: tier
+    tiers: [-0.15,-0.1,-0.05,0,0.05,0.1,0.15]
+    sql: ((case when ${TABLE}.aauicl_hold = 1 and ${TABLE}.aauicl_ind = 1 then ${TABLE}.net_written_premium else 0 end)-(case when ${TABLE}.aauicl_hold = 1 and ${TABLE}.aauicl_ind = 1 then ${TABLE}.ly_premium else 0 end))/nullif((case when ${TABLE}.aauicl_hold = 1 and ${TABLE}.aauicl_ind = 1 then ${TABLE}.ly_premium else 0 end),0) ;;
+    value_format_name: percent_1
+  }
 
 
 # Measures
