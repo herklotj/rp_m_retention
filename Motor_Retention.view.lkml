@@ -285,7 +285,7 @@ view: lk_m_retention {
   dimension: aauicl_yoy_net_premium_change_dist {
     label: "AAUICL Invited YoY Net Premium Change Distribution"
     type: tier
-    tiers: [-0.15,-0.1,-0.05,-0.01,0.01,0.05,0.1,0.15,0.2,0.25]
+    tiers: [-0.15,-0.1,-0.05,-0.025,0,0.025,0.05,0.1,0.15,0.2,0.25]
     sql:  case when ${TABLE}.aauicl_hold = 1 and (case when aauicl_ind = 1 then ${TABLE}.net_written_premium else ${TABLE}.inv_premium_hol end) != 0
             then ((case when aauicl_ind = 1 then ${TABLE}.net_written_premium else ${TABLE}.inv_premium_hol end) - ${TABLE}.ly_premium)/nullif(${TABLE}.ly_premium,0)
           else null end;;
