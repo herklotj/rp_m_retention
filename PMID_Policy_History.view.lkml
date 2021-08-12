@@ -32,6 +32,11 @@ view: pmid_policy_history {
     sql: transaction_dttm ;;
   }
 
+  dimension: 7_day_filter {
+    type: number
+    sql: CASE WHEN to_date(transaction_dttm) <= to_date(sysdate) - 6 THEN 1 else 0 END ;;
+  }
+
   dimension: broker_nb_rb {
     type: string
     sql: broker_nb_rb ;;
@@ -90,4 +95,4 @@ view: pmid_policy_history {
     value_format_name: percent_1
   }
 
- }
+}
