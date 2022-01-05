@@ -18,3 +18,4 @@ explore: motor_renewals {}
 explore: motor_sboc {}
 explore: mtas {}
 explore: pmid_policy_history_motor {}
+explore: motor_fca_compliancy {}
