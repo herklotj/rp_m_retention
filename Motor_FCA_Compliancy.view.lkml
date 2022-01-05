@@ -29,7 +29,7 @@ round ( (case when c.protect_no_claims_bonus ='true' then c.quotedpremium_ap_not
 FROM qs_cover c
 JOIN qs_mi_outputs m
 ON c.quote_id = m.quote_id
-AND to_date(c.quote_dttm) >= '2021-12-29' AND to_date(c.quote_dttm)!= '2999-12-31'
+AND to_date(c.quote_dttm) >= '2021-12-16' AND to_date(c.quote_dttm)!= '2999-12-31'
 AND business_purpose='Renewal'
 
 WHERE (quotedpremium_an_notinclipt - rct_mi_17) > 0 OR (quotedpremium_ap_notinclipt - rct_mi_18) > 0
