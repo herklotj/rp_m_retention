@@ -61,6 +61,11 @@ WHERE (quotedpremium_an_notinclipt - rct_mi_17) > 0 OR (quotedpremium_ap_notincl
     sql: ${TABLE}.quote_date ;;
   }
 
+  dimension: customer_quote_reference {
+    type: string
+    sql: ${TABLE}.customer_quote_reference ;;
+  }
+
   dimension: quote_id {
     type: string
     sql: ${TABLE}.quote_id ;;
