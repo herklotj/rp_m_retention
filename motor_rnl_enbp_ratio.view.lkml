@@ -104,7 +104,7 @@ view: motor_rnl_enbp_ratio {
 
   dimension: ratio_to_enbp {
     type: number
-    sql: ${TABLE}.ratio_to_enbp ;;
+    sql: round(${TABLE}.ratio_to_enbp, 2) ;;
   }
 
   measure: ratio_to_enbp_count  {
