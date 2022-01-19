@@ -62,13 +62,13 @@ view: pmid_policy_history {
   measure: Panel_Share_102  {
     type: number
     sql: ${sales_102}/${broker_sales} ;;
-    value_format_name: percent_2
+    value_format_name: percent_1
   }
 
   measure: Panel_Share_103  {
     type: number
     sql: ${sales_103}/${broker_sales} ;;
-    value_format_name: percent_2
+    value_format_name: percent_1
   }
 
   measure: Panel_Share_Total  {
