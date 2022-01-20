@@ -5,7 +5,7 @@ view: pmid_policy_history {
           from
          lk_m_policy_history
         where annual_cover_start_dttm = schedule_cover_start_dttm and status = 'P' and cfi_ind=0
-               and to_date(sysdate) > to_date(annual_cover_start_dttm) AND ( (to_date(sysdate)- to_date(policy_start_date) ) <= 183
+               and to_date(sysdate) > to_date(annual_cover_start_dttm) AND  (to_date(sysdate)- to_date(policy_start_date) ) <= 183
      ;;
   }
 
