@@ -48,14 +48,17 @@ view: pmid_policy_history {
   }
 
   measure: sales_102 {
+    type: number
     sql: sum(case when aauicl_scheme='102' then aauicl_ind else 0.00 end) ;;
   }
 
   measure: sales_103 {
+    type: number
     sql: sum(case when aauicl_scheme='103' then aauicl_ind else 0.00 end) ;;
   }
 
   measure: broker_sales {
+    type: number
     sql: sum(broker_ind) ;;
   }
 
