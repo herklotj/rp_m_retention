@@ -69,6 +69,11 @@ view: pmid_policy_history_motor {
     value_format_name: percent_1
   }
 
+  measure: Panel_Share_Total  {
+    type: number
+    sql: (${sales_103}+${sales_102})/${broker_sales} ;;
+    value_format_name: percent_1
+  }
 
   measure: commission_102 {
     type: number

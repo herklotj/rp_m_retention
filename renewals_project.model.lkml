@@ -2,7 +2,7 @@ connection: "echo_actian"
 
 # include all the views
 include: "*.view"
-fiscal_month_offset: -11
+fiscal_month_offset: -110
 
 datagroup: renewals_project_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
