@@ -85,19 +85,19 @@ view: pmid_policy_history {
     value_format_name: percent_1
   }
 
-  measure: commission_102 {
+  measure: commission_members {
     type: number
     sql: sum(broker_commission_102)/sum(net_written_premium_102) ;;
     value_format_name: percent_1
   }
 
-  measure: commission_103 {
+  measure: commission_non_members {
     type: number
     sql: sum(broker_commission_103)/nullif(sum(net_written_premium_103),0) ;;
     value_format_name: percent_1
   }
 
-  measure: commission_173 {
+  measure: commission_smart {
     type: number
     sql: sum(broker_commission_173)/nullif(sum(net_written_premium_173),0) ;;
     value_format_name: percent_1
