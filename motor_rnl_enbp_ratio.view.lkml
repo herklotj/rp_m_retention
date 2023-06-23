@@ -32,6 +32,8 @@ view: motor_rnl_enbp_ratio {
     AND to_date(c.quote_dttm) >= '2022-01-01' AND to_date(c.quote_dttm)!= '2999-12-31'
     AND business_purpose='Renewal'
 
+    where cover_start_dt >= '2023-01-01'
+
 
     ;;
   }
