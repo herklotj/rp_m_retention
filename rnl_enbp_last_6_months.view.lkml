@@ -1,4 +1,4 @@
-view: motor_rnl_enbp_ratio {
+view: m_rnl_enbp_last_6_months {
   derived_table: {
     sql:
 
@@ -21,18 +21,19 @@ view: motor_rnl_enbp_ratio {
     m.rct_mi_17,
     m.rct_mi_18,
 
-    quotedpremium_an_notinclipt - rct_mi_17 as diff1,
-    quotedpremium_ap_notinclipt - rct_mi_18 as diff2,
-    (case when c.protect_no_claims_bonus ='true' then c.quotedpremium_ap_notinclipt else c.quotedpremium_an_notinclipt end) / previous_policy_premium - 1 as YoY,
-    round ( (case when c.protect_no_claims_bonus ='true' then c.quotedpremium_ap_notinclipt else c.quotedpremium_an_notinclipt end) / (CASE WHEN protect_no_claims_bonus = 'false' then rct_mi_17 else rct_mi_18 end) , 2) as ratio_to_enbp
+      quotedpremium_an_notinclipt - rct_mi_17 as diff1,
+      quotedpremium_ap_notinclipt - rct_mi_18 as diff2,
+      (case when c.protect_no_claims_bonus ='true' then c.quotedpremium_ap_notinclipt else c.quotedpremium_an_notinclipt end) / previous_policy_premium - 1 as YoY,
+      round ( (case when c.protect_no_claims_bonus ='true' then c.quotedpremium_ap_notinclipt else c.quotedpremium_an_notinclipt end) / (CASE WHEN protect_no_claims_bonus = 'false' then rct_mi_17 else rct_mi_18 end) , 2) as ratio_to_enbp
 
-    FROM qs_cover c
-    JOIN qs_mi_outputs m
-    ON c.quote_id = m.quote_id
-    AND to_date(c.quote_dttm) >= '2022-01-01' AND to_date(c.quote_dttm)!= '2999-12-31'
-    AND business_purpose='Renewal'
+      FROM qs_cover c
+      JOIN qs_mi_outputs m
+      ON c.quote_id = m.quote_id
+      AND to_date(c.quote_dttm) >= '2022-01-01' AND to_date(c.quote_dttm)!= '2999-12-31'
+      AND business_purpose='Renewal'
+      WHERE ((( c.cover_start_dt  ) >= to_date(((TIMESTAMPADD(month,-5, DATE_TRUNC('month', DATE_TRUNC('day', CURRENT_TIMESTAMP)) )))) AND ( c.cover_start_dt  ) < to_date(((TIMESTAMPADD(month,6, TIMESTAMPADD(month,-5, DATE_TRUNC('month', DATE_TRUNC('day', CURRENT_TIMESTAMP)) )) )))))
 
-    ;;
+      ;;
   }
 
   dimension_group: cover_start_dt {
