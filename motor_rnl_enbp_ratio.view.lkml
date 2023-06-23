@@ -31,6 +31,7 @@ view: motor_rnl_enbp_ratio {
     ON c.quote_id = m.quote_id
     AND to_date(c.quote_dttm) >= '2022-01-01' AND to_date(c.quote_dttm)!= '2999-12-31'
     AND business_purpose='Renewal'
+    WHERE ((( motor_rnl_enbp_ratio.cover_start_dt  ) >= to_date(((TIMESTAMPADD(month,-5, DATE_TRUNC('month', DATE_TRUNC('day', CURRENT_TIMESTAMP)) )))) AND ( motor_rnl_enbp_ratio.cover_start_dt  ) < to_date(((TIMESTAMPADD(month,6, TIMESTAMPADD(month,-5, DATE_TRUNC('month', DATE_TRUNC('day', CURRENT_TIMESTAMP)) )) )))))
 
     ;;
   }
