@@ -7,7 +7,7 @@ view: motor_rnl_enbp_ratio {
     c.quote_id,
     c.rct_modelnumber,
     c.business_purpose,
-    to_date(c.cover_start_dt) as cover_start_dt,
+    to_timestamp(c.cover_start_dt) as cover_start_dt,
     to_date(c.quote_dttm) as quote_date,
     c.channel,
     c.consumer_name,

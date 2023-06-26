@@ -20,4 +20,3 @@ explore: mtas {}
 explore: pmid_policy_history_motor {}
 explore: motor_fca_compliancy {}
 explore: motor_rnl_enbp_ratio {}
-explore: m_rnl_enbp_last_6_months {}
