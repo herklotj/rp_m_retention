@@ -1,5 +1,5 @@
 view: lk_m_retention {
-  sql_table_name: actian.lk_m_retention ;;
+  sql_table_name: dbuser.lkr_motor_retention ;;
 
   dimension: aauicl_cfi_ind {
     type: number
