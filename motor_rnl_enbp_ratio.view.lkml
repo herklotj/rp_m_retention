@@ -26,8 +26,8 @@ view: motor_rnl_enbp_ratio {
     (case when c.protect_no_claims_bonus ='true' then c.quotedpremium_ap_notinclipt else c.quotedpremium_an_notinclipt end) / previous_policy_premium - 1 as YoY,
     round ( (case when c.protect_no_claims_bonus ='true' then c.quotedpremium_ap_notinclipt else c.quotedpremium_an_notinclipt end) / (CASE WHEN protect_no_claims_bonus = 'false' then rct_mi_17 else rct_mi_18 end) , 2) as ratio_to_enbp
 
-    FROM qs_cover c
-    JOIN qs_mi_outputs m
+    FROM dbuser.qs_cover c
+    JOIN dbuser.qs_mi_outputs m
     ON c.quote_id = m.quote_id
     AND to_date(c.quote_dttm) >= '2022-01-01' AND to_date(c.quote_dttm)!= '2999-12-31'
     AND business_purpose='Renewal'
